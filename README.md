@@ -33,9 +33,11 @@ https://wiki.mikrotik.com/wiki/Scripts#General
 
 If you search the web for "mikrotik dynamic dns" you'll find lots of solutions and ready-made scripts.
 
-# References
+# References & Greetings
 RouterOS by Example - Stephen R.W. Discher 1st ed.
 
 Johann Fenech blog - https://blog.johannfenech.com/?p=1385
 
 Mikrotik Wiki - https://wiki.mikrotik.com
+
+Thanks to Edoardo Savini for support!
