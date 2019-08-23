@@ -1,7 +1,8 @@
 #Reset the RouterBoard (find howto in wiki.mikrotik.com) to default and remove 
 #the default configuration, than do the requested customization to these file 
-#(username, password, shared secret, domain name, DHCP reservation if needed and 
-#cut&paste this file in a RouterBoard terminal window.
+#(username, password, shared secret, domain name, DHCP reservation if needed) and 
+#cut&paste this file in a RouterOS terminal window (via WinBox, SSH or WebFig).
+#WiFi interface is disabled.
 # aug/22/2019 11:09:22 by RouterOS 6.45.3
 #
 # model = 951G-2HnD
