@@ -40,4 +40,4 @@ Johann Fenech blog - https://blog.johannfenech.com/?p=1385
 
 Mikrotik Wiki - https://wiki.mikrotik.com
 
-Thanks to Edoardo Savini for support!
+Thanks to Edoardo Savini for support and to Nicola Amadei, my English supervisor from Bham!
