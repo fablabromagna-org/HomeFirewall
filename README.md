@@ -16,11 +16,11 @@ Static Lease for 192.168.1.35 (RouterBoard address)
 Port forwarding from WAN interface to RouterBoard address for UDP ports: 500 (IKE), 1701 (L2TP), 4500 (IPsec)
 
 RouterBoard addresses:
-ether2: (LAN interface)
+ether2: (LAN interface with DHCP server active)
 192.168.100.1/24
 
 ether5: (WAN interface)
-DHCP 
+DHCP client on (the address 192.168.1.35 is reserved on Telco Router)
 
 VPN network:
 192.168.102.0/24
@@ -30,3 +30,5 @@ VPN network:
 RouterOS by Example - Stephen R.W. Discher 1st ed.
 
 Johann Fenech blog - https://blog.johannfenech.com/?p=1385
+
+Mikrotik Wiki - https://wiki.mikrotik.com
