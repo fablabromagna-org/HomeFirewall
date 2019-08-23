@@ -25,6 +25,12 @@ DHCP client on (the address 192.168.1.35 is reserved on Telco Router)
 VPN network:
 192.168.102.0/24
 
+# Dynamic DNS
+In my network I've a device that handles DynamicDNS. This is e required feature if you want to reach your network from the outside if you don'y have a static public IP. If you actually don't have any Dynamic DNS client active on your network you can rely on RouterOS function.
+You have to choose a Dynamic DNS free provider, create an account and follow the instruction available here for RouterBoard configuration:
+https://wiki.mikrotik.com/wiki/Scripts#General
+
+If you search the web for "mikrotik dynamic dns" you'll find a lot of solutions and ready-made scripts.
 
 # References
 RouterOS by Example - Stephen R.W. Discher 1st ed.
