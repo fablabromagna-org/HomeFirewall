@@ -1,0 +1,70 @@
+#Reset the RouterBoard (find howto in wiki.mikrotik.com) to default and remove 
+#the default configuration, than do the requested customization to these file 
+#(username, password, shared secret, domain name, DHCP reservation if needed and 
+#cut&paste this file in a RouterBoard terminal window.
+# aug/22/2019 11:09:22 by RouterOS 6.45.3
+#
+# model = 951G-2HnD
+/interface wireless
+set [ find default-name=wlan1 ] ssid=MikroTik
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip ipsec peer
+add name=l2tpserver passive=yes
+/ip ipsec proposal
+set [ find default=yes ] enc-algorithms=3des
+/ip pool
+add comment="LAN Pool" name=pool1 ranges=192.168.100.3-192.168.100.99
+/ip dhcp-server
+add address-pool=pool1 disabled=no interface=ether2 lease-time=6h name=server1
+/ppp profile
+add dns-server=208.67.222.222 local-address=192.168.102.1 name=ipsec_vpn
+/interface l2tp-server server
+set authentication=mschap1,mschap2 default-profile=ipsec_vpn enabled=yes
+/ip address
+add address=192.168.100.1/24 interface=ether2 network=192.168.100.0
+/ip dhcp-client
+add dhcp-options=hostname,clientid disabled=no interface=ether5
+/ip dhcp-server lease
+#Customize and copy the line 26 for all the LAN clients that needs static IP
+#You can get client-id putting a 1: in front of client MAC Address and removing not significant zeros. 
+#Example:
+#Client MAC add: 00:11:32:5C:4E:00
+#client-id: 1:0:11:32:5C:4E:0
+add address=192.168.100.200 client-id="HERE_YOUR_CLIENT_ID_WITHOUT_QUOTES" mac-address="HERE_CLIENT_MAC_ADDRESS_WITHOUT_QUOTES" server=server1
+/ip dhcp-server network
+#I'm using OpenDNS, but you can use any DNS you like
+add address=192.168.100.0/24 dns-server=208.67.222.222,208.67.220.220 domain=DomainNameYouLike gateway=192.168.100.1 netmask=24
+/ip dns
+set allow-remote-requests=yes
+/ip firewall filter
+add action=accept chain=forward disabled=yes protocol=tcp src-address=192.168.1.1 src-port=80
+add action=drop chain=input connection-state=invalid
+add action=accept chain=input port=1701,500,4500 protocol=udp
+add action=accept chain=input protocol=ipsec-esp
+add action=accept chain=input src-address=192.168.100.0/24
+add action=accept chain=input connection-state=established
+add action=accept chain=input connection-state=related
+add action=drop chain=forward connection-state=invalid
+add action=accept chain=forward connection-state=new src-address=192.168.100.0/24
+add action=accept chain=forward connection-state=established
+add action=accept chain=forward connection-state=related
+add action=drop chain=input log=yes
+#More things to study about fasttrack, maybe this line is not needed.
+add action=fasttrack-connection chain=forward connection-mark=!ipsec connection-state=established,related
+/ip firewall mangle
+add action=mark-connection chain=forward comment="mark ipsec connections to exclude them from fasttrack" ipsec-policy=out,ipsec new-connection-mark=ipsec
+add action=mark-connection chain=forward comment="mark ipsec connections to exclude them from fasttrack" ipsec-policy=in,ipsec new-connection-mark=ipsec
+/ip firewall nat
+add action=masquerade chain=srcnat out-interface=ether5
+/ip ipsec identity
+add generate-policy=port-override peer=l2tpserver secret="HERE_THE_SHARED_SECRET_YOU_LIKE_WITHOUT_QUOTES"
+/ip ipsec policy
+set 0 dst-address=0.0.0.0/0 src-address=0.0.0.0/0
+/ppp secret
+add name="HERE_THE_USERNAME_YOU_LIKE_WITHOUT_QUOTES" password="HERE_THE_PASSWORD_YOU_LIKE_WITHOUT_QUOTES" profile=ipsec_vpn remote-address=192.168.102.2 service=l2tp
+# VIVA L'ITALIA!!!
+/system clock
+set time-zone-name=Europe/Rome
+/system ntp client
+set enabled=yes server-dns-names=it.pool.ntp.org
