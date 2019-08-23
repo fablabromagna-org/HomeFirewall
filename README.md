@@ -1,5 +1,5 @@
 # Home Firewall
-An old unused RouteBoard with ether1 port out of order, the needings for a firewall with VPN facility, no money in my pocket, two studying days and some cut and paste from the Internet are the ingredients of these recipe.
+An old unused RouteBoard with ether1 port out of order, the needing for a firewall with VPN facility, no money in my pocket, two studying days and some cut and paste from the Internet are the ingredients of this recipe.
 
 I'm not a RouterOS guru, so there could be better solutions, but this one works for me: suggestions for configuration and English improvement are welcome!
 
